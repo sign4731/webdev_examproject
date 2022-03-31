@@ -1,0 +1,64 @@
+%include("header", title="Welcome | Twitter")
+<main id="start">
+    %include("bird")
+    <h1>Welcome to Twitter</h1>
+
+    <button onclick="toggleModal('login')"> Log In </button>
+    <section id="log_in">
+        <div id="log_in__modal" onclick="toggleModal('close')"></div>
+            <form onsubmit="return false" id="log_in__form" autocomplete="off">
+                <h2>Log in to Twitter</h2>
+                <div>
+                    <input name="user_email" type="text" data-validate="email" data-min="1" data-max="20" required>
+                    <label for="user_email">Email</label>
+                </div>
+                <div>
+                    <input name="user_password" type="password" data-validate="str" data-min="6" data-max="20" required>
+                    <label for="user_password">Password </label>
+                    <span>(at least 6 characters and maximum 20)</span>
+                </div>
+                <p class="error_message"></p>
+                <button onclick="validate(logIn); return false" class="btn_white"> Log me in! </button>
+            </form>
+        
+    </section>
+
+    <button onclick="toggleModal('signup')"> Sign Up </button>
+    <section id="sign_up">
+        <div id="sign_up__modal" onclick="toggleModal('close')"></div>
+            <form autocomplete="off" onsubmit="return false" id="sign_up__form" >
+                <h2>Make an account</h2>
+                <div class="user_tag">
+                    <label for="user_tag" >&#64;</label>
+                    <input name="user_tag" type="text" placeholder="Tag name" data-validate="str" data-min="1" data-max="20" required>
+                </div>
+                <div>
+                    <input name="user_first_name" type="text" data-validate="str" data-min="1" data-max="20" required>
+                    <label for="user_first_name">First name</label>
+                </div>
+                <div>
+                    <input name="user_last_name" type="text" data-validate="str" data-min="1" data-max="20" required>
+                    <label for="user_last_name">Last name</label>
+                </div>
+                <div>
+                    <input name="user_email" type="text" data-validate="email" data-min="1" data-max="20" required>
+                    <label for="user_email">Email</label>
+                </div>
+                <div>
+                    <input name="user_password" type="password" data-validate="str" data-min="6" data-max="20" required>
+                    <label for="user_password">Password </label>
+                    <span>(at least 6 characters and maximum 20)</span>
+                </div>
+                <div class="user_image">
+                    <label for="user_image" >Upload a profile picture</label>
+                    <input name="user_image" type="file" data-validate="file" required>
+                </div>
+                <p class="error_message"></p>
+                <button onclick="validate(signUp); return false" class="btn_white" data-default="Sign me up!"
+                data-await="Signing up..."> Sign me up! </button>
+            </form>
+    </section>
+
+</main>
+
+%include("footer")
