@@ -41,6 +41,7 @@ def _():
         db = sqlite3.connect("database.sqlite")
         user = db.execute("SELECT * FROM users WHERE user_email = ? AND user_password = ?", (user_email, user_password,)).fetchone()
         if not user:
+            response.status = 500
             return "nonexistent"
         print("THIS IS YOU")
         print(json.dumps(user))

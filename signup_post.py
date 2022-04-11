@@ -105,7 +105,8 @@ def _():
             "user_email":user_email, 
             "user_password":user_password, 
             "user_image":user_image,
-            "user_iat":int(time.time())
+            "user_iat":int(time.time()),
+            "user_followers":"",
             }
         print(user)
 
@@ -117,7 +118,7 @@ def _():
 
     try:
         db = sqlite3.connect("database.sqlite")
-        db.execute("INSERT INTO users VALUES(:user_id, :user_tag, :user_first_name, :user_last_name, :user_email, :user_password, :user_image, :user_iat)", user)
+        db.execute("INSERT INTO users VALUES(:user_id, :user_tag, :user_first_name, :user_last_name, :user_email, :user_password, :user_image, :user_iat, :user_followers)", user)
         db.commit()
         db.row_factory = g.dict_factory
         users = json.dumps(db.execute("SELECT * FROM users").fetchall())

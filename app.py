@@ -1,28 +1,38 @@
-from bottle import error, get, default_app,response, post, redirect, request, route, run, static_file, view
+from bottle import delete, error, get, default_app,response, post, put, redirect, request, route, run, static_file, view
 import uuid
-import time 
+import time
+from time import ctime
 import imghdr
 import os
 import sqlite3
 import json
 import g
 import re
+import jwt
 
 ##############################
+# DELETE
+import tweet_delete_delete
+import tweet_likes_delete
+
+# GET
+import logout_get
+import main_get
+
 # POST
+import login_post 
 import signup_post 
-import login_post
+import tweet_create_post
+import tweet_likes_post
+
+# PUT
+import tweet_update_put
 
 ##############################
 @get("/")
 @view("index")
 def _():
     return
-
-##############################
-@get("/main")
-def _():
-    return "main" 
 
 ##############################
 @get("/styles/app.css")
@@ -45,6 +55,16 @@ def _(picture):
     return static_file(picture, root='./media')
 
 ##############################
+@route('/profile_images/<picture>')
+def _(picture):
+    return static_file(picture, root='./profile_images')
+
+##############################
+@route('/tweet_images/<picture>')
+def _(picture):
+    return static_file(picture, root='./tweet_images')
+
+##############################
 @error(404)
 @view("error")
 def _(error):
@@ -57,4 +77,4 @@ try:
   import production
   application = default_app()
 except Exception as ex:
-  run(host="127.0.0.1", port=3333, debug=True, reloader=True, server="paste")
+  run(host="127.0.0.1", port=3000, debug=True, reloader=True, server="paste")

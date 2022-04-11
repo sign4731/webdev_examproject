@@ -18,7 +18,7 @@ function validate(callback){
             element.value.length > parseInt(element.getAttribute("data-max")) 
         ){
           element.classList.add("validate_error")
-          element.style.borderColor = validate_error
+          element.style.border = `1px solid ${validate_error}`
         }
       break;
       case "int":

@@ -21,20 +21,12 @@ body {
   width: 50px;
   height: 50px;
 }
-main {
-  width: 50%;
-  margin: 1rem auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 button {
   color: #1d9bef;
   width: 300px;
   margin-bottom: 8px;
   cursor: pointer;
-  border: 1px solid #536471;
+  border: 1px solid #2f3336;
   min-width: 36px;
   min-height: 36px;
   padding-left: 16px;
@@ -47,8 +39,20 @@ button:hover {
   background-color: rgba(29, 155, 240, 0.1);
 }
 button.btn_white {
-  background-color: #fff;
+  background-color: #e7e9ea;
   color: #000;
+  border: none;
+}
+button.btn_white:hover {
+  background-color: #d7dbdc;
+}
+button.tweet_btn {
+  background-color: #1d9bef;
+  color: #e7e9ea;
+  border: none;
+}
+button.tweet_btn:hover {
+  background-color: #1a8cd8;
 }
 label {
   position: absolute;
@@ -61,31 +65,37 @@ label {
   transition: 0.2s ease;
   pointer-events: none;
 }
-input {
+input,
+textarea {
   position: relative;
   margin: 0.5rem 1px;
   padding: 1.5rem 1rem 1rem;
-  color: #fff;
+  color: #e7e9ea;
   border-radius: 4px;
-  border: 1px solid #536471;
+  border: 1px solid #2f3336;
   background-color: transparent;
   outline: none;
   transition: 0.2s;
 }
-input:focus {
+input:focus,
+textarea:focus {
   border: 1px solid #1d9bef !important;
   box-shadow: #1d9bef 0px 0px 0px 1px;
 }
-input:focus ~ label {
+input:focus ~ label,
+textarea:focus ~ label {
   transform: translate(-10%, -40%) scale(0.75);
   opacity: 0.6;
 }
-input:valid ~ label {
+input:valid ~ label,
+textarea:valid ~ label {
   transform: translate(-10%, -40%) scale(0.75);
   opacity: 0.6;
 }
 input:autofill,
-input:-webkit-autofill {
+textarea:autofill,
+input:-webkit-autofill,
+textarea:-webkit-autofill {
   background-color: transparent !important;
 }
 .error_message {
@@ -106,62 +116,48 @@ footer {
 .hide {
   display: none !important;
 }
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: normal;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/archivo/v9/k3k6o8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTT0zRp8A.ttf) format('truetype');
+.liked {
+  color: #f91880 ! important;
 }
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 800;
-  font-stretch: normal;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/archivo/v9/k3k6o8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTtDRp8A.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Nunito Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/nunitosans/v11/pe0qMImSLYBIv1o4X1M8cfe6.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Nunito Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/nunitosans/v11/pe03MImSLYBIv1o4X1M8cc8GBv5q.ttf) format('truetype');
+.liked span {
+  color: #f91880 ! important;
 }
 h1 {
   font-family: 'Archivo', sans-serif;
-  color: #fff;
+  color: #e7e9ea;
   font-weight: 100;
   margin: 2rem 0;
 }
 h2 {
   font-family: 'Archivo', sans-serif;
-  color: #fff;
+  color: #e7e9ea;
   font-weight: 100;
   margin-bottom: 1rem;
 }
 h3 {
   font-family: 'Archivo', sans-serif;
-  color: #fff;
+  color: #e7e9ea;
   font-weight: 100;
 }
 p,
 label,
-span {
+span,
+a {
   font-family: 'Nunito Sans', sans-serif;
-  color: #fff;
+  color: #e7e9ea;
+  text-decoration: none;
 }
 button {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 700;
+}
+main#start {
+  width: 50%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 main#start .bird {
   margin-bottom: 5rem;
@@ -241,7 +237,7 @@ main#start #sign_up__form .user_tag input {
 }
 main#start #sign_up__form .user_tag input::placeholder {
   font-family: 'Nunito Sans', sans-serif;
-  color: #fff;
+  color: #e7e9ea;
 }
 main#start #sign_up__form .user_tag label {
   margin-top: 15px;
@@ -260,13 +256,340 @@ main#start #sign_up__form span {
 main#start #sign_up__form button {
   margin: 1rem auto 0;
 }
-section h1 {
-  color: blue;
+#main_section {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 100vh;
+  padding-bottom: 50px;
 }
-section h2 {
-  font-size: 2rem;
+#main_section header {
+  height: 100vh;
+  width: 275px;
+  padding: 0 1rem;
+  margin-left: 1rem;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+#main_section .header_icons {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
+#main_section .header_icons div {
+  margin: 1rem;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+#main_section .header_icons div svg {
+  fill: #1d9bef;
+}
+#main_section .header_icons a {
+  height: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  padding: 1.5rem;
+  transition: 0.2s;
+}
+#main_section .header_icons a:hover {
+  background-color: rgba(231, 233, 234, 0.1);
+}
+#main_section .header_icons a svg {
+  fill: #e7e9ea;
+}
+#main_section .header_icons a p {
+  align-self: center;
+}
+#main_section main {
+  width: 75%;
+  height: 100%;
+}
+#main_section main .content {
+  max-width: 990px;
+  display: flex;
+  justify-content: space-between;
+}
+#main_section #main {
+  width: 600px;
+  border-right: 1px solid #2f3336;
+  border-left: 1px solid #2f3336;
+  height: 100%;
+  min-height: 100vh;
+}
+#main_section #main__top {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  height: 55px;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  padding: 1rem;
+  width: 599px;
+  border-right: 1px solid #2f3336;
+}
+#main_section #main__top h1 {
+  margin: 0;
+}
+#main_section #main__form {
+  display: flex;
+  padding: 0 1rem 1rem;
+  border-bottom: 1px solid #2f3336;
+  margin-top: 70px;
+}
+#main_section #main__form form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#main_section #main__form form .input_content {
+  border-bottom: 1px solid #2f3336;
+  margin-bottom: 1rem;
+  padding-right: 1px;
+}
+#main_section #main__form form .input_content .tweet_image {
+  border-radius: 1rem;
+}
+#main_section #main__form form input[type="text"] {
+  border: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  width: 100%;
+}
+#main_section #main__form form input[type="text"]:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+#main_section #main__form form .image_upload label {
+  margin: 0;
+  height: fit-content;
+  pointer-events: all;
+  cursor: pointer;
+}
+#main_section #main__form form .image_upload label i {
+  width: 20px;
+  height: 20px;
+  color: #1d9bef;
+}
+#main_section #main__form form .image_upload label i:hover {
+  color: #1a8cd8;
+}
+#main_section #main__form form .image_upload input[type="file"] {
+  display: none;
+}
+#main_section #main__form form button {
+  align-self: end;
+}
+#main_section #main__tweets .tweet {
+  display: flex;
+  padding: 1rem;
+  border-bottom: 1px solid #2f3336;
+}
+#main_section #main__tweets .tweet:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+#main_section #main__tweets .tweet_info {
+  display: flex;
+  gap: 5px;
+}
+#main_section #main__tweets .tweet_info a {
+  font-weight: 600;
+}
+#main_section #main__tweets .tweet_info a:hover {
+  text-decoration: underline;
+}
+#main_section #main__tweets .tweet_info p {
+  opacity: 0.6;
+  position: relative;
+}
+#main_section #main__tweets .tweet_info .tweet_iat {
+  padding-left: 7px;
+  display: flex;
+}
+#main_section #main__tweets .tweet_info .tweet_iat:before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+  background-color: #e7e9ea;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+#main_section #main__tweets .tweet_image {
+  margin: 1rem 0;
+}
+#main_section #main__tweets .tweet_btns {
+  display: flex;
+  justify-content: flex-end;
+}
+#main_section #main__tweets .tweet_btns button {
+  border: none;
+  padding: 0;
+  width: auto;
+  color: #e7e9ea;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+#main_section #main__tweets .tweet_btns button span {
+  pointer-events: none;
+}
+#main_section #main__tweets .tweet_btns button.tweet_like_btn:hover {
+  background-color: rgba(249, 24, 128, 0.2);
+  color: #f91880;
+}
+#main_section #main__tweets .tweet_btns button.tweet_update_btn:hover {
+  background-color: rgba(0, 186, 124, 0.2);
+  color: #00ba7c;
+}
+#main_section #main__tweets .tweet_btns button.tweet_delete_btn:hover {
+  background-color: rgba(29, 155, 240, 0.2);
+  color: #1d9bf0;
+}
+#main_section #main__tweets .tweet_btns button.own_tweet_like:hover {
+  background-color: transparent;
+  cursor: default;
+}
+#main_section #main__tweets .tweet_update {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+}
+#main_section #main__tweets .tweet_update__modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(91, 112, 131, 0.4);
+}
+#main_section #main__tweets .tweet_update__form {
+  position: relative;
+  background-color: #000;
+  display: flex;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 2rem;
+  z-index: 100;
+}
+#main_section #main__tweets .tweet_update__form > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#main_section #main__tweets .tweet_update__form .input_content {
+  border-bottom: 1px solid #2f3336;
+  margin-bottom: 1rem;
+  padding-right: 1px;
+}
+#main_section #main__tweets .tweet_update__form input[type="text"] {
+  border: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  width: 100%;
+}
+#main_section #main__tweets .tweet_update__form input[type="text"]:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+#main_section #main__tweets .tweet_update__form .image_upload label {
+  margin: 0;
+  height: fit-content;
+  pointer-events: all;
+  cursor: pointer;
+}
+#main_section #main__tweets .tweet_update__form .image_upload label i {
+  width: 20px;
+  height: 20px;
+  color: #1d9bef;
+}
+#main_section #main__tweets .tweet_update__form .image_upload label i:hover {
+  color: #1a8cd8;
+}
+#main_section #main__tweets .tweet_update__form .image_upload input[type="file"] {
+  display: none;
+}
+#main_section #main__tweets .tweet_update__form button {
+  align-self: end;
+}
+#main_section #main__tweets form {
+  width: 100%;
+}
+#main_section #sidebar {
+  width: 350px;
+  height: 100%;
+  min-height: 100vh;
+}
+#main_section #sidebar__users {
+  background-color: #16181c;
+  width: 100%;
+  border-radius: 16px;
+  margin: 1rem 0;
+}
+#main_section #sidebar__users h2 {
+  padding: 1rem;
+  margin: 0;
+}
+#main_section #sidebar__users .user {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+#main_section #sidebar__users .user:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+#main_section #sidebar__users .user__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+#main_section #sidebar__users .user__names a {
+  font-weight: 600;
+}
+#main_section #sidebar__users .user__names a:hover {
+  text-decoration: underline;
+}
+#main_section #sidebar__users .user__names p {
+  color: #71767b;
+}
+#main_section #sidebar__users .user button {
+  padding: 0 1rem;
+  margin: 0 0 0 auto;
+  width: fit-content;
+}
+#main_section .user_image {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+#main_section .tweet_image {
+  border-radius: 1rem;
 }
 main#error_page {
+  width: 50%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 main#error_page .bird {
@@ -278,6 +601,7 @@ footer {
   padding: 1rem;
   font-size: 0.8rem;
   text-align: center;
+  border-top: 1px solid #2f3336;
 }
 footer p {
   color: #adadad;
