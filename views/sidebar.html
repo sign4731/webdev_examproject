@@ -1,0 +1,23 @@
+<section class="sidebar">
+    <div class="sidebar__users">
+        <h2>Who to follow</h2>
+        % for user in users:
+            % if not user['user_id'] == logged_in_user['user_id']:
+                <div class="user">
+                    <input type="hidden" value="{{user['user_id']}}">
+                    <img src="../profile_images/{{user['user_image']}}" alt="user image" class="user_image">
+                    <div class="user__names">
+                        <a href="/profile/{{user['user_id']}}">{{user["user_first_name"]}}</a>
+                        <p>{{user["user_tag"]}}</p>
+                    </div>
+                    % if any(follow['user_who_got_followed_id_fk'] == user['user_id'] for follow in follows):
+                        <button onclick="handleFollow()" class="btn_white followed">Following</button>
+                    % else:
+                        <button onclick="handleFollow()" class="btn_white">Follow</button>
+                    % end
+                    
+                </div>
+            % end
+        % end
+    </div>
+</section>

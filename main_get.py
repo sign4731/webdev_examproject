@@ -1,4 +1,4 @@
-from bottle import get, response, request,  view
+from bottle import get, redirect, response, request,  view
 import g
 import jwt
 import sqlite3
@@ -8,10 +8,26 @@ from time import time, ctime
 @get("/main")
 @view("main")
 def _():
+    
     try:
         db = sqlite3.connect("database.sqlite")
         db.row_factory = g.dict_factory
 
+        # Check if user is logged in, otherwise redirect to start
+        response.set_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        user_jwt = request.get_cookie("user_jwt") 
+        print(user_jwt)
+        if not user_jwt:
+            raise
+
+    except Exception as ex:
+        print(ex)
+        print("REDIRECTING")
+        return redirect("/")
+        
+
+    try:
+        
         # Get and show image belonging to logged in user
         user_jwt = request.get_cookie("user_jwt") 
         decoded_jwt = jwt.decode(user_jwt, "my secret key", algorithms="HS256")
@@ -43,8 +59,13 @@ def _():
         users = db.execute("SELECT * FROM users").fetchall()
         print(users)
 
+        # Get who logged in user follows
+        follows = db.execute("SELECT * FROM follows WHERE user_who_followed_id_fk = ?", (user_id,)).fetchall()
+        print("FOLLOWS")
+        print(follows)
+
         # return dict with logged in user, tweets and all users
-        return dict(logged_in_user = logged_in_user, users = users, tweets = tweets, user_likes = user_likes, all_likes = all_likes)
+        return dict(logged_in_user = logged_in_user, users = users, tweets = tweets, user_likes = user_likes, all_likes = all_likes, follows=follows)
 
     except Exception as ex:
         print(ex)

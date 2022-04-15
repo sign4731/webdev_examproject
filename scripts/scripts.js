@@ -4,7 +4,17 @@ window.addEventListener("load", init)
 function init(){
     console.log("Page and script loaded");
 
-
+    if(document.querySelectorAll(".followed")){
+        document.querySelectorAll(".followed").forEach(btn => {
+            btn.addEventListener("mouseover", () => {
+                btn.textContent = "Unfollow"
+            })
+            btn.addEventListener("mouseout", () => {
+                btn.textContent = "Following"
+            })
+        })
+    }
+    
 }
 
 function toggleModal(modal){
@@ -24,17 +34,30 @@ function toggleModal(modal){
 }
 
 function handleFileInput(){
-    console.log("getting image");
+    console.log("Getting image");
     console.log(event.target.value);
     const form = event.target.form;
 
     if (event.target.value){
-        form.querySelector(".tweet_image").classList.remove("hide");
+        form.querySelector(".tweet_image_container").classList.remove("hide");
         form.querySelector(".tweet_image").src = URL.createObjectURL(event.target.files[0]);
     } else {
-        form.querySelector(".tweet_image").classList.add("hide");
+        form.querySelector(".tweet_image_container").classList.add("hide");
         form.querySelector(".tweet_image").src = "";
     }
+}
+
+function removeImage(){
+    console.log("Removing image");
+    const image = event.target.parentElement;
+    console.log(image);
+
+    const image_input = event.target.parentElement.parentElement.parentElement.querySelector("input[type=file]");
+    console.log(image_input);
+
+    image.classList.add("hide");
+    image_input.value = "";
+
 }
 
 
@@ -113,11 +136,12 @@ async function createTweet(){
     let response = await conneciton.json()
     console.log(response);
 
+    let randomNumber = Math.random();
     let tweet = `
     <div class="tweet">
                             
         <img src="profile_images/${response.user_image}" alt="" class="user_image">
-        <form onsubmit="return false" action="">
+        <form onsubmit="return false" autocomplete="off" >
         <input class="tweet_id" type="hidden" value="${response.tweet_id}">
             <div class="tweet_info">
                 <a href="" class="tweet_user_name">${response.user_first_name}</a href="">
@@ -135,18 +159,43 @@ async function createTweet(){
                     <span>0</span>
                 </button>
 
-                <button onclick="updateTweet()" class="tweet_update_btn fa-solid fa-pen-to-square"></button>
+                <button onclick="toggleModal('update')" class="tweet_update_btn fa-solid fa-pen-to-square"></button>
                 <button onclick="deleteTweet()" class="tweet_delete_btn fa-solid fa-trash-can"></button>
             </div>
         </form>
 
+        <section class="tweet_update">
+            <div class="tweet_update__modal" onclick="toggleModal('close')"></div>
+    
+                <form onsubmit="return false" class="tweet_update__form" autocomplete="off">
+                <img src="profile_images/${response.user_image}" alt="user image" class="user_image">
+                <div>
+                    <div class="input_content">
+                        <input name="tweet_text" type="text" value="${response.tweet_text}" data-validate="str" data-min="1" data-max="200">
+                        <img alt="tweet image" class="tweet_image hide">
+                    </div>
+                    
+                    <div class="image_upload">
+                        <label for="tweet_update_image_upload_${randomNumber}">
+                            <i class="fa-solid fa-image"></i>
+                        </label>
+                        <input id="tweet_update_image_upload_${randomNumber}" name="tweet_image" type="file" accept="image/png, image/jpeg, image/jpg" onchange="handleFileInput()">
+                    </div>
+
+                    <button onclick="validate(updateTweet)" class="tweet_btn">Update my tweet!</button>
+                </div>
+                
+                </form>
+    
+        </section>
+
     </div>
     `;
 
-    document.querySelector("#main__tweets").insertAdjacentHTML("afterbegin", tweet)
+    document.querySelector(".main__tweets").insertAdjacentHTML("afterbegin", tweet)
     form.reset()
     form.querySelector(".tweet_image").src = "";
-    form.querySelector(".tweet_image").classList.add("hide")
+    form.querySelector(".tweet_image_container").classList.add("hide")
 }
 
 async function deleteTweet(){
@@ -253,3 +302,46 @@ async function handleLikeTweet(){
 
 }
 
+async function handleFollow(){
+    console.log("You followed someone!");
+    const user = event.target.parentElement;
+    console.log(user);
+
+    const followBtn = event.target;
+
+    const user_id = user.querySelector("input").value;
+    console.log(user_id);
+
+    if(!followBtn.classList.contains("followed")){
+        console.log("You followed this user");
+        followBtn.classList.toggle("followed");
+        followBtn.textContent = "Following";
+        init()
+
+        const connection = await fetch("/follows/" + user_id, {
+            method: "POST",
+        });
+        return
+
+    } else{
+        console.log("You unfollowed this user");
+        followBtn.classList.toggle("followed");
+        followBtn.addEventListener("mouseover", () => {
+            followBtn.textContent = "Follow";
+        })
+        followBtn.addEventListener("mouseout", () => {
+            followBtn.textContent = "Follow";
+        })
+        followBtn.textContent = "Follow";
+
+        const connection = await fetch("/unfollows/" + user_id, {
+            method: "DELETE",
+        });
+        return
+    }
+
+}
+
+async function search(){
+    console.log("you searched");
+}

@@ -1,31 +1,26 @@
 %include("head", title="Twitter")
 
-<div id="main_section">
-    <header>
-        <div class="header_icons">
-            %include("bird")
-            <a href="" class="header_icons__profile fa-solid fa-user">
-                <p class="header_icons__profile-text">Profile</p>
-            </a>
-            <a href="/logout" class="header_icons__logout fa-solid fa-right-from-bracket">
-                <p class="header_icons__logout-text">Log out</p>
-            </a>
-        </div>
-    </header>
+<div class="main_section">
+
+    %include("header", user_id=logged_in_user['user_id'])
 
     <main>
         <div class="content">
-            <section id="main">
-                <div id="main__top">
+            <section class="main">
+                <div class="main__top">
                     <h1>Home</h1>
                 </div>
                 
-                <div id="main__form">
+                <div class="main__form">
                     <img src="profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                     <form autocomplete="off">
                         <div class="input_content">
                             <input name="tweet_text" type="text" placeholder=" Hi {{logged_in_user['user_first_name']}}! What's happening?" data-validate="str" data-min="1" data-max="200">
-                            <img alt="tweet image" class="tweet_image hide">
+                            <div class="tweet_image_container hide">
+                                <div onclick="removeImage()" class="remove_tweet_image fa-solid fa-xmark"></div>
+                                <img alt="tweet image"  class="tweet_image">
+                            </div>
+                            
                         </div>
                         
                         <div class="image_upload">
@@ -38,17 +33,17 @@
                         <button onclick="validate(createTweet); return false"  class="tweet_btn">Tweet</button>
                     </form>
                 </div>
-                <div id="main__tweets">
+                <div class="main__tweets">
                     % tweet_counter = 0
                     % for tweet in tweets:
                     % tweet_counter = tweet_counter + 1
                         <div class="tweet">
 
                             <img src="profile_images/{{tweet['user_image']}}" alt="" class="user_image">
-                            <form action="" onsubmit="return false">
+                            <form action="" onsubmit="return false" autocomplete="off">
                                 <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
                                 <div class="tweet_info">
-                                    <a href="" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
+                                    <a href="profile/{{tweet['user_id']}}" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
                                     <p class="tweet_user_tag">{{tweet['user_tag']}}</p>
                                     <p class="tweet_iat">{{tweet['tweet_iat_date']}}</p>
                                 </div>
@@ -116,7 +111,7 @@
                             <section class="tweet_update">
                                 <div class="tweet_update__modal" onclick="toggleModal('close')"></div>
                       
-                                  <form onsubmit="return false" class="tweet_update__form">
+                                  <form onsubmit="return false" class="tweet_update__form" autocomplete="off">
                                     <img src="profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                                     <div>
                                         <div class="input_content">
@@ -143,21 +138,9 @@
                     % end
                 </div>
             </section>
-            <section id="sidebar">
-                <div id="sidebar__users">
-                    <h2>Who to follow</h2>
-                    % for user in users:
-                        <div class="user">
-                            <img src="profile_images/{{user['user_image']}}" alt="user image" class="user_image">
-                            <div class="user__names">
-                                <a href="">{{user["user_first_name"]}}</a>
-                                <p>{{user["user_tag"]}}</p>
-                            </div>
-                            <button class="btn_white">Follow</button>
-                        </div>
-                    % end
-                </div>
-            </section>
+
+            %include("sidebar")
+
         </div>
     </main>
 

@@ -8,4 +8,4 @@ CREATE TABLE tweets(
   tweet_iat_date           TEXT NOT NULL,
   tweet_updated_at         TEXT NOT NULL,
   PRIMARY KEY(tweet_id)
-); WITHOUT ROWID
+) WITHOUT ROWID;

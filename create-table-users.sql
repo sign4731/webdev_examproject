@@ -8,6 +8,5 @@ CREATE TABLE users(
   user_password           TEXT NOT NULL,
   user_image              TEXT NOT NULL,
   user_iat                TEXT NOT NULL,
-  user_followers          TEXT NOT NULL,
   PRIMARY KEY(user_id)
-); WITHOUT ROWID
+) WITHOUT ROWID;

@@ -1,0 +1,59 @@
+%include("head", title="Admin Panel")
+
+<div class="main_section">
+    <main>
+        <div class="content">
+            <section class="main">
+                <div class="main__top admin">
+                    <h1>Admin Panel</h1>
+                </div>
+
+                <div class="main__tweets admin">
+                    % for tweet in tweets:
+                        <div class="tweet">
+
+                            <img src="../profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                            <form action="" onsubmit="return false" autocomplete="off">
+                                <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
+                                <div class="tweet_info">
+                                    <a href="" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
+                                    <p class="tweet_user_tag">{{tweet['user_tag']}}</p>
+                                    <p class="tweet_iat">{{tweet['tweet_iat_date']}}</p>
+                                </div>
+                                
+                                <p class="tweet_text">{{tweet['tweet_text']}}</p>
+
+                                % if tweet['tweet_image']:
+                                    <img src="../tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                    % else:
+                                    <img src="" alt="" class="tweet_image hide">
+                                % end
+
+                                <div class="tweet_btns">
+
+                                    
+                                        <button class="own_tweet_like fa-solid fa-heart">
+                                            % counter = 0
+                                            % for like in all_likes:
+                                                % if like['tweet_id_fk'] == tweet['tweet_id']:
+                                                % counter = counter + 1
+                                                % end
+                                            % end
+                                            
+                                            <span>{{counter}}</span>
+                                        </button>
+
+                                    <button onclick="deleteTweet()" class="tweet_delete_btn fa-solid fa-trash-can"></button>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    % end
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+%include("footer")

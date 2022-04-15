@@ -1,0 +1,160 @@
+%include("head", title="Twitter")
+
+<div class="main_section">
+    %include("header", user_id=logged_in_user['user_id'])
+
+    <main>
+        <div class="content">
+            <section class="main">
+                <div class="main__top">
+                    <a href="/main" class="fa-solid fa-arrow-left"></a>
+                    <h1>{{user['user_first_name']}}</h1>
+                </div>
+
+                <div class="main_profile">
+
+                    <img src="../profile_images/{{user['user_image']}}" alt="">
+
+                    <div>
+                        <div class="main_profile__info">
+                            <h2>{{user['user_first_name']}} {{user['user_last_name']}}</h2>
+                            <p class="user_tag">{{user['user_tag']}}</p>
+                            <p class="user_iat"> Joined {{user['user_iat']}}</p>
+
+                            <div class="followers">
+                                <p class="user_followers">{{following_amount}} <span>Following</span></p>
+                                <p class="user_followers">{{followers_amount}} <span>Followers</span></p>
+                            </div>
+                        </div>
+
+                        % if not user['user_id'] == logged_in_user['user_id']:
+                            <div class="main_profile__follow">
+                                <input type="hidden" value="{{user['user_id']}}">
+                                
+                                % if any(follow['user_who_got_followed_id_fk'] == user['user_id'] for follow in follows):
+                                    <button onclick="handleFollow()" class="btn_white followed">Following</button>
+                                % else:
+                                    <button onclick="handleFollow()" class="btn_white">Follow</button>
+                                % end
+
+                            </div>
+                        % end
+                    </div>
+                    
+                </div>
+
+                <div class="main__tweets">
+                    % tweet_counter = 0
+                    % for tweet in tweets:
+                        % if tweet['tweet_created_by'] == user['user_id']:
+                            % tweet_counter = tweet_counter + 1
+                            <div class="tweet">
+
+                                <img src="../profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                                <form action="" onsubmit="return false" autocomplete="off">
+                                    <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
+                                    <div class="tweet_info">
+                                        <a href="" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
+                                        <p class="tweet_user_tag">{{tweet['user_tag']}}</p>
+                                        <p class="tweet_iat">{{tweet['tweet_iat_date']}}</p>
+                                    </div>
+                                    
+                                    <p class="tweet_text">{{tweet['tweet_text']}}</p>
+
+                                    % if tweet['tweet_image']:
+                                        <img src="../tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                        % else:
+                                        <img src="" alt="" class="tweet_image hide">
+                                    % end
+
+                                    <div class="tweet_btns">
+                                        
+                                        % if not tweet['tweet_created_by'] == logged_in_user['user_id']:
+                                        
+                                            <!-- if tweet['tweet_id'] is in likes then add class liked -->
+                                            % if any(like['tweet_id_fk'] == tweet['tweet_id'] for like in user_likes):
+                                                <button onclick="handleLikeTweet()" class="tweet_like_btn fa-solid fa-heart liked" data-liked="true">
+                                                    % counter = 0
+                                                    % for like in all_likes:
+                                                        % if like['tweet_id_fk'] == tweet['tweet_id']:
+                                                        % counter = counter + 1
+                                                        % end
+                                                    % end
+                                                    
+                                                    <span>{{counter}}</span>
+                                                </button>
+
+                                                % else:
+                                                <button onclick="handleLikeTweet()" class="tweet_like_btn fa-solid fa-heart" data-liked="false">
+                                                    % counter = 0
+                                                    % for like in all_likes:
+                                                        % if like['tweet_id_fk'] == tweet['tweet_id']:
+                                                        % counter = counter + 1
+                                                        % end
+                                                    % end
+                                                    
+                                                    <span>{{counter}}</span>
+                                                </button>
+                                            % end
+
+                                        % else:
+                                        
+                                            <button class="own_tweet_like fa-solid fa-heart">
+                                                % counter = 0
+                                                % for like in all_likes:
+                                                    % if like['tweet_id_fk'] == tweet['tweet_id']:
+                                                    % counter = counter + 1
+                                                    % end
+                                                % end
+                                                
+                                                <span>{{counter}}</span>
+                                            </button>
+
+                                        % end
+                                        
+                                        % if tweet['tweet_created_by'] == logged_in_user['user_id']:
+                                        <button onclick="toggleModal('update')" class="tweet_update_btn fa-solid fa-pen-to-square"></button>
+                                        <button onclick="deleteTweet()" class="tweet_delete_btn fa-solid fa-trash-can"></button>
+                                        % end
+                                    </div>
+                                </form>
+
+                                <section class="tweet_update">
+                                    <div class="tweet_update__modal" onclick="toggleModal('close')"></div>
+                        
+                                    <form onsubmit="return false" class="tweet_update__form" autocomplete="off">
+                                        <img src="../profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+                                        <div>
+                                            <div class="input_content">
+                                                <input name="tweet_text" type="text" value="{{tweet["tweet_text"]}}" data-validate="str" data-min="1" data-max="200">
+                                                <img alt="tweet image" class="tweet_image hide">
+                                            </div>
+                                            
+                                            <div class="image_upload">
+                                                <label for="tweet_update_image_upload_{{tweet_counter}}">
+                                                    <i class="fa-solid fa-image"></i>
+                                                </label>
+                                                <input id="tweet_update_image_upload_{{tweet_counter}}" name="tweet_image" type="file" accept="image/png, image/jpeg, image/jpg" onchange="handleFileInput()">
+                                            </div>
+
+                                            <button onclick="validate(updateTweet)" class="tweet_btn">Update my tweet!</button>
+                                        </div>
+                                        
+                                    </form>
+                        
+                                </section>
+
+                            </div>
+                        % end
+                    % end
+                </div>
+
+            </section>
+            %include("sidebar")
+        </div>
+    </main>
+
+    
+</div>
+
+%include("footer")
