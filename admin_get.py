@@ -7,7 +7,7 @@ import sqlite3
 @view("admin")
 def _():
     try:
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.row_factory = g.dict_factory
 
         # Get and show all tweets 
@@ -19,7 +19,7 @@ def _():
         all_likes = db.execute("SELECT * FROM tweets_liked_by").fetchall()
         print("ALL LIKES", all_likes)
 
-        return dict(tweets = tweets, all_likes = all_likes)
+        return dict(tweets = tweets, all_likes = all_likes, path = g.PATH)
     except Exception as ex:
         print(ex)
         response.status = 500

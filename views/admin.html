@@ -12,7 +12,7 @@
                     % for tweet in tweets:
                         <div class="tweet">
 
-                            <img src="../profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                            <img src="{{path}}/profile_images/{{tweet['user_image']}}" alt="" class="user_image">
                             <form action="" onsubmit="return false" autocomplete="off">
                                 <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
                                 <div class="tweet_info">
@@ -24,7 +24,7 @@
                                 <p class="tweet_text">{{tweet['tweet_text']}}</p>
 
                                 % if tweet['tweet_image']:
-                                    <img src="../tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                    <img src="{{path}}/tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
                                     % else:
                                     <img src="" alt="" class="tweet_image hide">
                                 % end

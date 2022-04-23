@@ -38,11 +38,11 @@ def _():
         response.status = 500
     
     try:
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         user = db.execute("SELECT * FROM users WHERE user_email = ? AND user_password = ?", (user_email, user_password,)).fetchone()
         if not user:
             response.status = 500
-            return "nonexistent"
+            return "There is no user matching this information"
         print("THIS IS YOU")
         print(json.dumps(user))
 

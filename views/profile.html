@@ -1,25 +1,46 @@
 %include("head", title="Twitter")
 
 <div class="main_section">
-    %include("header", user_id=logged_in_user['user_id'])
+    %include("header", user_id=logged_in_user['user_id'], user_image=logged_in_user['user_image'], user_first_name=logged_in_user['user_first_name'], user_last_name=logged_in_user['user_last_name'], user_tag=logged_in_user['user_tag'])
 
     <main>
         <div class="content">
             <section class="main">
                 <div class="main__top">
-                    <a href="/main" class="fa-solid fa-arrow-left"></a>
-                    <h1>{{user['user_first_name']}}</h1>
+                    <a href="/main" class="back fa-solid fa-arrow-left"></a>
+                    <div class="main__top_text">
+                        <h1>{{user['user_first_name']}}</h1>
+                        <p class="tweet_amount"> <span>{{tweets_amount}}</span> Tweets</p>
+                    </div>
+                    
+
                 </div>
 
                 <div class="main_profile">
 
-                    <img src="../profile_images/{{user['user_image']}}" alt="">
+                    <div class="cover_image"></div>
 
                     <div>
+                        <div class="image_container">
+                            <img src="../{{path}}profile_images/{{user['user_image']}}" alt="">
+
+                            % if not user['user_id'] == logged_in_user['user_id']:
+                                <div class="follow">
+                                    <input type="hidden" value="{{user['user_id']}}">
+                                    
+                                    % if any(follow['user_who_got_followed_id_fk'] == user['user_id'] for follow in follows):
+                                        <button onclick="handleFollow()" class="btn_white followed">Following</button>
+                                    % else:
+                                        <button onclick="handleFollow()" class="btn_white">Follow</button>
+                                    % end
+
+                                </div>
+                            % end
+                        </div>
                         <div class="main_profile__info">
                             <h2>{{user['user_first_name']}} {{user['user_last_name']}}</h2>
                             <p class="user_tag">{{user['user_tag']}}</p>
-                            <p class="user_iat"> Joined {{user['user_iat']}}</p>
+                            <p class="user_iat"> <i class="fa-solid fa-calendar-days"></i> Joined {{user['user_iat']}}</p>
 
                             <div class="followers">
                                 <p class="user_followers">{{following_amount}} <span>Following</span></p>
@@ -27,18 +48,7 @@
                             </div>
                         </div>
 
-                        % if not user['user_id'] == logged_in_user['user_id']:
-                            <div class="main_profile__follow">
-                                <input type="hidden" value="{{user['user_id']}}">
-                                
-                                % if any(follow['user_who_got_followed_id_fk'] == user['user_id'] for follow in follows):
-                                    <button onclick="handleFollow()" class="btn_white followed">Following</button>
-                                % else:
-                                    <button onclick="handleFollow()" class="btn_white">Follow</button>
-                                % end
-
-                            </div>
-                        % end
+                        
                     </div>
                     
                 </div>
@@ -46,11 +56,12 @@
                 <div class="main__tweets">
                     % tweet_counter = 0
                     % for tweet in tweets:
+                        <!-- Make sure only tweets beloning to visited user is shown -->
                         % if tweet['tweet_created_by'] == user['user_id']:
                             % tweet_counter = tweet_counter + 1
                             <div class="tweet">
 
-                                <img src="../profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                                <img src="../{{path}}profile_images/{{tweet['user_image']}}" alt="" class="user_image">
                                 <form action="" onsubmit="return false" autocomplete="off">
                                     <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
                                     <div class="tweet_info">
@@ -62,7 +73,7 @@
                                     <p class="tweet_text">{{tweet['tweet_text']}}</p>
 
                                     % if tweet['tweet_image']:
-                                        <img src="../tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                        <img src="../{{path}}tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
                                         % else:
                                         <img src="" alt="" class="tweet_image hide">
                                     % end
@@ -119,15 +130,20 @@
                                     </div>
                                 </form>
 
-                                <section class="tweet_update">
-                                    <div class="tweet_update__modal" onclick="toggleModal('close')"></div>
-                        
-                                    <form onsubmit="return false" class="tweet_update__form" autocomplete="off">
-                                        <img src="../profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+                                <section class="tweet_modal tweet_update">
+                                    <div class="tweet_modal__modal" onclick="toggleModal('close')"></div>
+                          
+                                      <form onsubmit="return false" class="tweet_modal__form" autocomplete="off">
+
+                                        <i class="back fa-solid fa-xmark" onclick="toggleModal('closeButton')"></i>
+                                        <img src="../{{path}}profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                                         <div>
                                             <div class="input_content">
                                                 <input name="tweet_text" type="text" value="{{tweet["tweet_text"]}}" data-validate="str" data-min="1" data-max="200">
-                                                <img alt="tweet image" class="tweet_image hide">
+                                                <div class="tweet_image_container hide">
+                                                    <div onclick="removeImage()" class="remove_tweet_image fa-solid fa-xmark"></div>
+                                                    <img alt="tweet image"  class="tweet_image">
+                                                </div>
                                             </div>
                                             
                                             <div class="image_upload">
@@ -136,12 +152,12 @@
                                                 </label>
                                                 <input id="tweet_update_image_upload_{{tweet_counter}}" name="tweet_image" type="file" accept="image/png, image/jpeg, image/jpg" onchange="handleFileInput()">
                                             </div>
-
+    
                                             <button onclick="validate(updateTweet)" class="tweet_btn">Update my tweet!</button>
                                         </div>
                                         
-                                    </form>
-                        
+                                      </form>
+                          
                                 </section>
 
                             </div>

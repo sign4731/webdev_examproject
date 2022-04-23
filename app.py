@@ -1,14 +1,6 @@
-from bottle import delete, error, get, default_app,response, post, put, redirect, request, route, run, static_file, view
-import uuid
-import time
-from time import ctime
-import imghdr
-import os
-import sqlite3
-import json
+from bottle import error, get, default_app,response, route, run, static_file, view
 import g
-import re
-import jwt
+
 
 ##############################
 # DELETE
@@ -39,42 +31,97 @@ def _():
     return
 
 ##############################
-@get("/styles/app.css")
-def _():
-    return static_file("/styles/app.css", root=".")
-
-##############################
-@get("/scripts/validator.js")
-def _():
-    return static_file("/scripts/validator.js", root=".")
-
-##############################
-@get("/scripts/scripts.js")
-def _():
-    return static_file("/scripts/scripts.js", root=".")
-
-##############################
-@route('/media/<picture>')
-def _(picture):
-    return static_file(picture, root='./media')
-
-##############################
-@route('/profile_images/<picture>')
-def _(picture):
-    return static_file(picture, root='./profile_images')
-
-##############################
-@route('/tweet_images/<picture>')
-def _(picture):
-    return static_file(picture, root='./tweet_images')
-
-##############################
 @error(404)
 @view("error")
 def _(error):
     print(error)
     response.status = 404
-    return    
+    return 
+
+##############################
+
+
+
+
+# STATIC FILES
+##############################
+@get("/styles/app.css")
+def _():
+    return static_file("/styles/app.css", root=g.PATH)
+
+##############################
+@get("/scripts/createTweet.js")
+def _():
+    return static_file("/scripts/createTweet.js", root=g.PATH)
+
+##############################
+@get("/scripts/deleteTweet.js")
+def _():
+    return static_file("/scripts/deleteTweet.js", root=g.PATH)
+    
+##############################
+@get("/scripts/handleFileInput.js")
+def _():
+    return static_file("/scripts/handleFileInput.js", root=g.PATH)
+
+##############################
+@get("/scripts/handleFollow.js")
+def _():
+    return static_file("/scripts/handleFollow.js", root=g.PATH)
+
+##############################
+@get("/scripts/handleLikeTweet.js")
+def _():
+    return static_file("/scripts/handleLikeTweet.js", root=g.PATH)
+
+##############################
+@get("/scripts/index.js")
+def _():
+    return static_file("/scripts/index.js", root=g.PATH)
+
+##############################
+@get("/scripts/logIn.js")
+def _():
+    return static_file("/scripts/logIn.js", root=g.PATH)
+
+##############################
+@get("/scripts/removeImage.js")
+def _():
+    return static_file("/scripts/removeImage.js", root=g.PATH)
+
+##############################
+@get("/scripts/signUp.js")
+def _():
+    return static_file("/scripts/signUp.js", root=g.PATH)
+
+##############################
+@get("/scripts/toggleModal.js")
+def _():
+    return static_file("/scripts/toggleModal.js", root=g.PATH)
+
+##############################
+@get("/scripts/updateTweet.js")
+def _():
+    return static_file("/scripts/updateTweet.js", root=g.PATH)
+
+##############################
+@get("/scripts/validator.js")
+def _():
+    return static_file("/scripts/validator.js", root=g.PATH)
+
+##############################
+@route('/profile_images/<picture>')
+def _(picture):
+    return static_file(picture, root=f"{g.PATH}profile_images")
+
+##############################
+@route('/tweet_images/<picture>')
+def _(picture):
+    return static_file(picture, root=f"{g.PATH}tweet_images")
+
+##############################
+   
+
 
 ##############################
 try:

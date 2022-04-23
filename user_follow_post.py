@@ -8,7 +8,7 @@ import sqlite3
 def _ (user_id):
     try:
         # Get user to follow
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.row_factory = g.dict_factory
         user_to_be_followed = db.execute("SELECT * FROM users WHERE user_id = ?", (user_id,)).fetchone()
         print(user_to_be_followed)

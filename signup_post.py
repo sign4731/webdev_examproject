@@ -84,16 +84,16 @@ def _():
         image_name = f"{image_id}{file_extension}"
         print(image_name)
         # Save the image
-        user_image.save(f"profile_images/{image_name}") 
+        user_image.save(f"{g.PATH}profile_images/{image_name}") 
         user_image = f"{image_name}"
 
         # Make sure that image is actually a valid image
         # by reading its mime type
-        imghdr_extention = imghdr.what(f"profile_images/{image_name}")
+        imghdr_extention = imghdr.what(f"{g.PATH}profile_images/{image_name}")
         if file_extension != f".{imghdr_extention}":
             print(file_extension)
             # remove the invalid image from the folder
-            os.remove(f"profile_images/{image_name}")
+            os.remove(f"{g.PATH}profile_images/{image_name}")
             response.status = 400
             return "Wrong file extension"
 
@@ -112,11 +112,11 @@ def _():
     except Exception as ex:
         print(ex)
         response.status = 500
-        return "Something went wrong"
+        return ex
     
 
     try:
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.execute("INSERT INTO users VALUES(:user_id, :user_tag, :user_first_name, :user_last_name, :user_email, :user_password, :user_image, :user_iat)", user)
         db.commit()
         db.row_factory = g.dict_factory
@@ -127,7 +127,9 @@ def _():
     except Exception as ex:
         print(ex)
         response.status = 500
-        return "Something went wrong"
+        if "users.user_tag" in str(ex): return "Tag already exists"
+        if "users.user_email" in str(ex): return "Email already exists"
+        return f"Something is wrong {ex}"
     
     finally:
         db.close()
@@ -157,6 +159,7 @@ def _():
         <p>
         Hi, %s<br>
         <b>Thank you for joining Twitter!</b><br>
+        Go to this link to log in: <a href="http://signeweb.eu.pythonanywhere.com/"></a><br>
         </p>
     </body>
     </html>

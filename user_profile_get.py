@@ -9,7 +9,7 @@ import sqlite3
 def _(user_id):
 
     try:
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.row_factory = g.dict_factory
 
         # Check if user is logged in, otherwise redirect to start
@@ -37,14 +37,18 @@ def _(user_id):
         logged_in_user = db.execute("SELECT * FROM users WHERE user_email = ?", (user_email,)).fetchone()
         print(logged_in_user)
 
-        # Get user 
+        # Get user whose profile is visiting
         user = db.execute("SELECT * FROM users WHERE user_id = ?", (user_id,)).fetchone()
         print(user)
 
         # Get and show all tweets belonging to user
         tweets = db.execute("SELECT * FROM tweets JOIN users WHERE tweets.tweet_created_by = users.user_id ORDER BY tweet_iat DESC").fetchall()
+        tweets_amount = db.execute("SELECT COUNT(*) FROM tweets WHERE tweet_created_by = ?", (user_id,)).fetchone()
         print("TWEETS")
         print(tweets)
+        print("TWEETS COUNT")
+        print(tweets_amount['COUNT(*)'])
+        tweets_amount = tweets_amount['COUNT(*)']
 
         # Get and show all users
         users = db.execute("SELECT * FROM users").fetchall()
@@ -77,7 +81,17 @@ def _(user_id):
         print(follows)
 
 
-        return dict(logged_in_user=logged_in_user, user = user, tweets = tweets, users = users, all_likes = all_likes, followers_amount = followers_amount, following_amount = following_amount, user_likes = user_likes, follows = follows)
+        return dict(
+            logged_in_user=logged_in_user, 
+            user = user, tweets = tweets, 
+            users = users, 
+            all_likes = all_likes, 
+            followers_amount = followers_amount, 
+            following_amount = following_amount, 
+            user_likes = user_likes, 
+            follows = follows, 
+            path = g.PATH, 
+            tweets_amount = tweets_amount)
 
     except Exception as ex:
         print(ex)

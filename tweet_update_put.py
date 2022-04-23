@@ -24,7 +24,7 @@ def _(tweet_id):
         response.status = 500
 
     try:
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.row_factory = g.dict_factory
         tweet = db.execute("SELECT * FROM tweets WHERE tweet_id = ?", (tweet_id,)).fetchone()
         print("UPDATE "*10)
@@ -97,7 +97,7 @@ def _(tweet_id):
             response.status = 400
         
         print(tweet)
-        return {'tweet_text':tweet_text, 'tweet_image':tweet_image}
+        return {'tweet_text':tweet_text, 'tweet_image':tweet_image, 'path':g.PATH}
 
     except Exception as ex:
         print(ex)

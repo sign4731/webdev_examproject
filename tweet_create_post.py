@@ -46,21 +46,21 @@ def _():
             image_name = f"{image_id}{file_extension}"
             print(image_name)
             # Save the image
-            tweet_image.save(f"tweet_images/{image_name}") 
+            tweet_image.save(f"{g.PATH}tweet_images/{image_name}") 
             tweet_image = f"{image_name}"
 
             # Make sure that image is actually a valid image
             # by reading its mime type
-            imghdr_extention = imghdr.what(f"tweet_images/{image_name}")
+            imghdr_extention = imghdr.what(f"{g.PATH}tweet_images/{image_name}")
             if file_extension != f".{imghdr_extention}":
                 print(file_extension)
                 # remove the invalid image from the folder
-                os.remove(f"tweet_images/{image_name}")
+                os.remove(f"{g.PATH}tweet_images/{image_name}")
                 tweet_image = ""
                 response.status = 400
 
         # Get owner of tweet
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         db.row_factory = g.dict_factory
 
         user_jwt = request.get_cookie("user_jwt") 
@@ -103,7 +103,9 @@ def _():
         # Get tweet and user to output
         tweet_and_user = db.execute("SELECT * FROM tweets JOIN users WHERE tweets.tweet_id = ? AND users.user_email = ?", (tweet_id, user_email,)).fetchone()
         print(tweet_and_user)
-        return tweet_and_user
+
+
+        return dict(tweet_and_user = tweet_and_user, path = g.PATH)
     except Exception as ex:
         print(ex)
         response.status = 500

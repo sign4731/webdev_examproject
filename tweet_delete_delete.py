@@ -1,4 +1,5 @@
 from bottle import delete, response
+import g
 import sqlite3
 
 ##############################
@@ -6,9 +7,10 @@ import sqlite3
 def _(tweet_id):
     try: 
         # Get tweet from database 
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
         tweet = db.execute("SELECT * FROM tweets WHERE tweet_id = ?", (tweet_id,)).fetchone()
         print(tweet)
+        print(tweet["tweet_created_by"])
 
         # Validate tweet
         if not tweet:

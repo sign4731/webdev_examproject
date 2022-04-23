@@ -15,6 +15,14 @@ def _is_text(text=None):
   print(text)
   return text
 
+##############################
+
 REGEX_EMAIL = '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
 
 GMAIL_PASSWORD = "Kpjq09r#"
+
+try:
+    import production
+    PATH = "/home/signeweb/twitter/"
+except Exception as ex:
+    PATH = ""

@@ -1,11 +1,17 @@
 <section class="sidebar">
+    <div class="sidebar__search">
+        <form autocomplete="off">
+            <input id="search" type="text" placeholder="Search Twitter">
+            <label for="search" class="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+        </form>
+    </div>
     <div class="sidebar__users">
         <h2>Who to follow</h2>
         % for user in users:
             % if not user['user_id'] == logged_in_user['user_id']:
                 <div class="user">
                     <input type="hidden" value="{{user['user_id']}}">
-                    <img src="../profile_images/{{user['user_image']}}" alt="user image" class="user_image">
+                    <img src="../{{path}}profile_images/{{user['user_image']}}" alt="user image" class="user_image">
                     <div class="user__names">
                         <a href="/profile/{{user['user_id']}}">{{user["user_first_name"]}}</a>
                         <p>{{user["user_tag"]}}</p>
@@ -19,5 +25,15 @@
                 </div>
             % end
         % end
+    </div>
+
+    <div class="footer">
+            <p>Terms of Service</p>
+            <p>Privacy Policy</p>
+            <p>Cookie Policy</p>
+            <p>Accessibility</p>
+            <p>Ads info</p>
+            <p>More</p>
+            <p>© 2022 Signe Marie Mathiasen, KEA</p>
     </div>
 </section>

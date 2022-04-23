@@ -2,7 +2,7 @@
 
 <div class="main_section">
 
-    %include("header", user_id=logged_in_user['user_id'])
+    %include("header", user_id=logged_in_user['user_id'], user_image=logged_in_user['user_image'], user_first_name=logged_in_user['user_first_name'], user_last_name=logged_in_user['user_last_name'], user_tag=logged_in_user['user_tag'])
 
     <main>
         <div class="content">
@@ -12,7 +12,7 @@
                 </div>
                 
                 <div class="main__form">
-                    <img src="profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+                    <img src="{{path}}profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                     <form autocomplete="off">
                         <div class="input_content">
                             <input name="tweet_text" type="text" placeholder=" Hi {{logged_in_user['user_first_name']}}! What's happening?" data-validate="str" data-min="1" data-max="200">
@@ -39,11 +39,11 @@
                     % tweet_counter = tweet_counter + 1
                         <div class="tweet">
 
-                            <img src="profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                            <img src="{{path}}profile_images/{{tweet['user_image']}}" alt="" class="user_image">
                             <form action="" onsubmit="return false" autocomplete="off">
                                 <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
                                 <div class="tweet_info">
-                                    <a href="profile/{{tweet['user_id']}}" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
+                                    <a href="{{path}}profile/{{tweet['user_id']}}" class="tweet_user_name">{{tweet['user_first_name']}}</a href="">
                                     <p class="tweet_user_tag">{{tweet['user_tag']}}</p>
                                     <p class="tweet_iat">{{tweet['tweet_iat_date']}}</p>
                                 </div>
@@ -51,7 +51,7 @@
                                 <p class="tweet_text">{{tweet['tweet_text']}}</p>
 
                                 % if tweet['tweet_image']:
-                                    <img src="tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                    <img src="{{path}}tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
                                     % else:
                                     <img src="" alt="" class="tweet_image hide">
                                 % end
@@ -108,15 +108,19 @@
                                 </div>
                             </form>
 
-                            <section class="tweet_update">
-                                <div class="tweet_update__modal" onclick="toggleModal('close')"></div>
+                            <section class="tweet_modal tweet_update">
+                                <div class="tweet_modal__modal" onclick="toggleModal('close')"></div>
                       
-                                  <form onsubmit="return false" class="tweet_update__form" autocomplete="off">
-                                    <img src="profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+                                  <form onsubmit="return false" class="tweet_modal__form" autocomplete="off">
+                                    <i class="back fa-solid fa-xmark" onclick="toggleModal('closeButton')"></i>
+                                    <img src="{{path}}profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                                     <div>
                                         <div class="input_content">
                                             <input name="tweet_text" type="text" value="{{tweet["tweet_text"]}}" data-validate="str" data-min="1" data-max="200">
-                                            <img alt="tweet image" class="tweet_image hide">
+                                            <div class="tweet_image_container hide">
+                                                <div onclick="removeImage()" class="remove_tweet_image fa-solid fa-xmark"></div>
+                                                <img alt="tweet image"  class="tweet_image">
+                                            </div>
                                         </div>
                                         
                                         <div class="image_upload">

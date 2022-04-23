@@ -1,4 +1,5 @@
 from bottle import get, redirect, response, request
+import g
 import jwt
 import sqlite3
 
@@ -7,7 +8,7 @@ import sqlite3
 def _():
     try:
         # Connect to db
-        db = sqlite3.connect("database.sqlite")
+        db = sqlite3.connect(f"{g.PATH}database.sqlite")
 
         # Get the user session id
         user_jwt = request.get_cookie("user_jwt") 
