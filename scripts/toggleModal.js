@@ -18,6 +18,9 @@ function toggleModal(modal){
     }  else if(modal == "menu"){
         document.querySelector(".header_menu_modal").classList.add("show");
 
+    } else if(modal == "search"){
+        document.querySelector(".search_modal").classList.add("show");
+
     } else if(modal == "close"){
         console.log(event.target)
         event.target.parentElement.classList.remove("show_flex");

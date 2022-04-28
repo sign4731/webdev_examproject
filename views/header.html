@@ -16,7 +16,7 @@
     </div>
     <div class="header_menu">
         <div class="header_menu__button" onclick="toggleModal('menu')">
-            <img src="{{path}}/profile_images/{{ get('user_image') }}" alt="" class="user_image">
+            <img src="/profile_images/{{ get('user_image') }}" alt="" class="user_image">
             <div>
                 <p>{{ get('user_first_name') }} {{ get('user_last_name') }}</p>
                 <p class="user_tag">{{ get('user_tag') }}</p>
@@ -30,13 +30,19 @@
         <div class="tweet_modal__modal background" onclick="toggleModal('close')"></div>
         <div class="header_menu_box">
             <div class="header_menu_box__top">
-                <img src="{{path}}/profile_images/{{ get('user_image') }}" alt="" class="user_image">
+                <img src="/profile_images/{{ get('user_image') }}" alt="" class="user_image">
                 <div>
-                    <p>{{ get('user_first_name') }} {{ get('user_last_name') }}</p>
+                    <a href="/profile/{{ get('user_id') }}">{{ get('user_first_name') }} {{ get('user_last_name') }}</a>
                     <p class="user_tag">{{ get('user_tag') }}</p>
                 </div>
             </div>
             <a href="/logout">Log out {{ get('user_tag') }}</a>
+            <!-- <p onclick="changeColorTheme()">Change color</p> -->
+            <div class="container">
+                <p>Light / Dark Mode</p>
+                <input class="container_toggle" type="checkbox" id="switch" name="mode">
+                <label for="switch">Toggle</label>
+            </div>
             
             <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M12.538 6.478c-.14-.146-.335-.228-.538-.228s-.396.082-.538.228l-9.252 9.53c-.21.217-.27.538-.152.815.117.277.39.458.69.458h18.5c.302 0 .573-.18.69-.457.118-.277.058-.598-.152-.814l-9.248-9.532z"></path></g></svg>
         </div>
@@ -48,7 +54,7 @@
 
         <div class="tweet_modal__form">
             <i class="back fa-solid fa-xmark" onclick="toggleModal('closeButton')"></i>
-            <img src="../{{path}}profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+            <img src="../profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
             <form class="tweet_header" onsubmit="return false" autocomplete="off">
                 <div class="input_content">
                     <input name="tweet_text" type="text"placeholder=" Hi {{logged_in_user['user_first_name']}}! What's happening?" data-validate="str" data-min="1" data-max="200">

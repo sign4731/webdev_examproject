@@ -1,6 +1,4 @@
 from bottle import error, get, default_app,response, route, run, static_file, view
-import g
-
 
 ##############################
 # DELETE
@@ -16,6 +14,7 @@ import user_profile_get
 
 # POST
 import login_post 
+import search_post
 import signup_post 
 import tweet_create_post
 import tweet_likes_post
@@ -37,10 +36,6 @@ def _(error):
     print(error)
     response.status = 404
     return 
-
-##############################
-
-
 
 
 # STATIC FILES
@@ -88,6 +83,11 @@ def _():
 @get("/scripts/removeImage.js")
 def _():
     return static_file("/scripts/removeImage.js", root=".")
+
+##############################
+@get("/scripts/search.js")
+def _():
+    return static_file("/scripts/search.js", root=".")
 
 ##############################
 @get("/scripts/signUp.js")

@@ -22,7 +22,7 @@
 
                     <div>
                         <div class="image_container">
-                            <img src="../{{path}}profile_images/{{user['user_image']}}" alt="">
+                            <img src="../profile_images/{{user['user_image']}}" alt="">
 
                             % if not user['user_id'] == logged_in_user['user_id']:
                                 <div class="follow">
@@ -61,7 +61,7 @@
                             % tweet_counter = tweet_counter + 1
                             <div class="tweet">
 
-                                <img src="../{{path}}profile_images/{{tweet['user_image']}}" alt="" class="user_image">
+                                <img src="../profile_images/{{tweet['user_image']}}" alt="" class="user_image">
                                 <form action="" onsubmit="return false" autocomplete="off">
                                     <input class="tweet_id" type="hidden" value="{{tweet['tweet_id']}}">
                                     <div class="tweet_info">
@@ -73,7 +73,7 @@
                                     <p class="tweet_text">{{tweet['tweet_text']}}</p>
 
                                     % if tweet['tweet_image']:
-                                        <img src="../{{path}}tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
+                                        <img src="../tweet_images/{{tweet['tweet_image']}}" alt="" class="tweet_image">
                                         % else:
                                         <img src="" alt="" class="tweet_image hide">
                                     % end
@@ -136,7 +136,7 @@
                                       <form onsubmit="return false" class="tweet_modal__form" autocomplete="off">
 
                                         <i class="back fa-solid fa-xmark" onclick="toggleModal('closeButton')"></i>
-                                        <img src="../{{path}}profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
+                                        <img src="../profile_images/{{logged_in_user['user_image']}}" alt="user image" class="user_image">
                                         <div>
                                             <div class="input_content">
                                                 <input name="tweet_text" type="text" value="{{tweet["tweet_text"]}}" data-validate="str" data-min="1" data-max="200">

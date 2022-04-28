@@ -10,7 +10,7 @@ from time import time, ctime
 def _():
     
     try:
-        db = sqlite3.connect(f"{g.PATH}database.sqlite")
+        db = sqlite3.connect("database.sqlite")
         db.row_factory = g.dict_factory
 
         # Check if user is logged in, otherwise redirect to start
@@ -71,8 +71,7 @@ def _():
             tweets = tweets, 
             user_likes = user_likes, 
             all_likes = all_likes, 
-            follows=follows, 
-            path = g.PATH)
+            follows=follows)
 
     except Exception as ex:
         print(ex)

@@ -23,7 +23,7 @@ async function updateTweet(){
     form.parentElement.parentElement.querySelector(".tweet_text").textContent = response.tweet_text;
     if (response.tweet_image){
         console.log("Image is updated");
-        form.parentElement.parentElement.querySelector(".tweet_image").src = `${response.path}/tweet_images/` + response.tweet_image;
+        form.parentElement.parentElement.querySelector(".tweet_image").src = `/tweet_images/` + response.tweet_image;
         form.parentElement.parentElement.querySelector(".tweet_image").classList.remove("hide");
     } else {
         console.log("Image is removed");

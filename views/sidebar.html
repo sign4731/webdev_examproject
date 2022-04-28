@@ -1,17 +1,25 @@
 <section class="sidebar">
     <div class="sidebar__search">
         <form autocomplete="off">
-            <input id="search" type="text" placeholder="Search Twitter">
+            <input id="search" name="search_query" type="text" placeholder="Search Twitter" onkeyup="onSearch()" onclick="toggleModal('search')">
             <label for="search" class="search"><i class="fa-solid fa-magnifying-glass"></i></label>
         </form>
     </div>
+
+    <section class="tweet_modal search_modal">
+        <div class="tweet_modal__modal background" onclick="toggleModal('close')"></div>
+        <div class="search_box">
+            <p>Try searching for people</p>
+        </div>
+    </section>
+
     <div class="sidebar__users">
         <h2>Who to follow</h2>
         % for user in users:
             % if not user['user_id'] == logged_in_user['user_id']:
                 <div class="user">
                     <input type="hidden" value="{{user['user_id']}}">
-                    <img src="../{{path}}profile_images/{{user['user_image']}}" alt="user image" class="user_image">
+                    <img src="../profile_images/{{user['user_image']}}" alt="user image" class="user_image">
                     <div class="user__names">
                         <a href="/profile/{{user['user_id']}}">{{user["user_first_name"]}}</a>
                         <p>{{user["user_tag"]}}</p>

@@ -9,7 +9,7 @@ import sqlite3
 def _(user_id):
 
     try:
-        db = sqlite3.connect(f"{g.PATH}database.sqlite")
+        db = sqlite3.connect("database.sqlite")
         db.row_factory = g.dict_factory
 
         # Check if user is logged in, otherwise redirect to start
@@ -90,7 +90,6 @@ def _(user_id):
             following_amount = following_amount, 
             user_likes = user_likes, 
             follows = follows, 
-            path = g.PATH, 
             tweets_amount = tweets_amount)
 
     except Exception as ex:
