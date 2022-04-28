@@ -33,7 +33,7 @@ async function createTweet(){
             
             <p class="tweet_text">${response.tweet_and_user.tweet_text}</p>
 
-           ${response.tweet_and_user.tweet_image ? `<img src="../${response.path}tweet_images/${response.tweet_and_user.tweet_image}" alt="" class="tweet_image">` : `<img src="" alt="" class="tweet_image">`}
+           ${response.tweet_and_user.tweet_image ? `<img src="../${response.path}tweet_images/${response.tweet_and_user.tweet_image}" alt="" class="tweet_image">` : `<img src="" alt="" class="tweet_image hide">`}
 
             <div class="tweet_btns">
 
@@ -57,7 +57,7 @@ async function createTweet(){
                         <input name="tweet_text" type="text" value="${response.tweet_and_user.tweet_text}" data-validate="str" data-min="1" data-max="200">
                         <div class="tweet_image_container hide">
                             <div onclick="removeImage()" class="remove_tweet_image fa-solid fa-xmark"></div>
-                            <img alt="tweet image"  class="tweet_image">
+                            <img alt="tweet image"  class="tweet_update_image">
                         </div>
                     </div>
                     

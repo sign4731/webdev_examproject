@@ -47,77 +47,77 @@ def _(error):
 ##############################
 @get("/styles/app.css")
 def _():
-    return static_file("/styles/app.css", root=g.PATH)
+    return static_file("/styles/app.css", root=".")
 
 ##############################
 @get("/scripts/createTweet.js")
 def _():
-    return static_file("/scripts/createTweet.js", root=g.PATH)
+    return static_file("/scripts/createTweet.js", root=".")
 
 ##############################
 @get("/scripts/deleteTweet.js")
 def _():
-    return static_file("/scripts/deleteTweet.js", root=g.PATH)
+    return static_file("/scripts/deleteTweet.js", root=".")
     
 ##############################
 @get("/scripts/handleFileInput.js")
 def _():
-    return static_file("/scripts/handleFileInput.js", root=g.PATH)
+    return static_file("/scripts/handleFileInput.js", root=".")
 
 ##############################
 @get("/scripts/handleFollow.js")
 def _():
-    return static_file("/scripts/handleFollow.js", root=g.PATH)
+    return static_file("/scripts/handleFollow.js", root=".")
 
 ##############################
 @get("/scripts/handleLikeTweet.js")
 def _():
-    return static_file("/scripts/handleLikeTweet.js", root=g.PATH)
+    return static_file("/scripts/handleLikeTweet.js", root=".")
 
 ##############################
 @get("/scripts/index.js")
 def _():
-    return static_file("/scripts/index.js", root=g.PATH)
+    return static_file("/scripts/index.js", root=".")
 
 ##############################
 @get("/scripts/logIn.js")
 def _():
-    return static_file("/scripts/logIn.js", root=g.PATH)
+    return static_file("/scripts/logIn.js", root=".")
 
 ##############################
 @get("/scripts/removeImage.js")
 def _():
-    return static_file("/scripts/removeImage.js", root=g.PATH)
+    return static_file("/scripts/removeImage.js", root=".")
 
 ##############################
 @get("/scripts/signUp.js")
 def _():
-    return static_file("/scripts/signUp.js", root=g.PATH)
+    return static_file("/scripts/signUp.js", root=".")
 
 ##############################
 @get("/scripts/toggleModal.js")
 def _():
-    return static_file("/scripts/toggleModal.js", root=g.PATH)
+    return static_file("/scripts/toggleModal.js", root=".")
 
 ##############################
 @get("/scripts/updateTweet.js")
 def _():
-    return static_file("/scripts/updateTweet.js", root=g.PATH)
+    return static_file("/scripts/updateTweet.js", root=".")
 
 ##############################
 @get("/scripts/validator.js")
 def _():
-    return static_file("/scripts/validator.js", root=g.PATH)
+    return static_file("/scripts/validator.js", root=".")
 
 ##############################
 @route('/profile_images/<picture>')
 def _(picture):
-    return static_file(picture, root=f"{g.PATH}profile_images")
+    return static_file(picture, root="profile_images")
 
 ##############################
 @route('/tweet_images/<picture>')
 def _(picture):
-    return static_file(picture, root=f"{g.PATH}tweet_images")
+    return static_file(picture, root="tweet_images")
 
 ##############################
    

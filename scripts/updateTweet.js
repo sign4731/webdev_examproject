@@ -34,6 +34,6 @@ async function updateTweet(){
     console.log(form.parentElement);
     form.parentElement.classList.remove("show_flex")
     form.reset()
-    form.querySelector(".tweet_image").src = "";
-    form.querySelector(".tweet_image").classList.add("hide");
+    form.querySelector(".tweet_update_image").src = "";
+    form.querySelector(".tweet_update_image").classList.add("hide");
 }

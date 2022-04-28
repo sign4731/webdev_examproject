@@ -66,6 +66,8 @@ def _():
     except Exception as ex:
         print(ex)
         response.status = 500
+        if "sessions.user_email" in str(ex): return "Email is already logged in"
+        return f"{ex}"
     finally:
         db.close()
      

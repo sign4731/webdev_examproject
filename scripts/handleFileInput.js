@@ -8,9 +8,17 @@ function handleFileInput(){
 
     if (event.target.value){
         form.querySelector(".tweet_image_container").classList.remove("hide");
-        form.querySelector(".tweet_image").src = URL.createObjectURL(event.target.files[0]);
+        if(form.querySelector(".tweet_image")){
+            form.querySelector(".tweet_image").src = URL.createObjectURL(event.target.files[0]);
+        } else {
+            form.querySelector(".tweet_update_image").src = URL.createObjectURL(event.target.files[0]);
+        }
     } else {
         form.querySelector(".tweet_image_container").classList.add("hide");
-        form.querySelector(".tweet_image").src = "";
+        if(form.querySelector(".tweet_image")){
+            form.querySelector(".tweet_image").src = "";
+        } else{
+            form.querySelector(".tweet_update_image").src = "";
+        }
     }
 }
