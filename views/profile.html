@@ -43,9 +43,57 @@
                             <p class="user_iat"> <i class="fa-solid fa-calendar-days"></i> Joined {{user['user_iat']}}</p>
 
                             <div class="followers">
-                                <p class="user_followers">{{following_amount}} <span>Following</span></p>
-                                <p class="user_followers">{{followers_amount}} <span>Followers</span></p>
+                                <p onclick="toggleModal('following')" class="user_followers">{{following_amount}} <span>Following</span></p>
+                                <p onclick="toggleModal('followers')" class="user_followers">{{followers_amount}} 
+                                    <span>Followers</span> 
+                                </p>
                             </div>
+                            <div class="followers_box box">
+                                <div class="followers_box__top"> <p> Followers</p></div>
+                                % if followers == []:
+                                    <p>This user is not following anyone yet</p>
+                                % end
+                                <div class="followers_box__bottom">
+                                    % for followed_user in followers:
+                                        % for user in users:
+                                            % if followed_user['user_who_followed_id_fk'] == user['user_id']:
+                                                <a href="/profile/{{user['user_id']}}" class="user">
+                                                    <input type="hidden" value="{{user['user_id']}}">
+                                                    <img src="../profile_images/{{user['user_image']}}" alt="user image" class="user_image">
+                                                    <div class="user__names">
+                                                        <p>{{user["user_first_name"]}}</p>
+                                                        <p>{{user["user_tag"]}}</p>
+                                                    </div>
+                                                </a>
+                                            % end
+                                        % end
+                                    % end
+                                </div>
+                            </div>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M12.538 6.478c-.14-.146-.335-.228-.538-.228s-.396.082-.538.228l-9.252 9.53c-.21.217-.27.538-.152.815.117.277.39.458.69.458h18.5c.302 0 .573-.18.69-.457.118-.277.058-.598-.152-.814l-9.248-9.532z"></path></g></svg>
+                            <div class="following_box box">
+                                <div class="following_box__top"> <p> Following</p></div>
+                                % if following == []:
+                                    <p>This user is not followed by anyone yet</p>
+                                % end
+                                <div class="following_box__bottom">
+                                    % for following_user in following:
+                                        % for user in users:
+                                            % if following_user['user_who_got_followed_id_fk'] == user['user_id']:
+                                                <a href="/profile/{{user['user_id']}}" class="user">
+                                                    <input type="hidden" value="{{user['user_id']}}">
+                                                    <img src="../profile_images/{{user['user_image']}}" alt="user image" class="user_image">
+                                                    <div class="user__names">
+                                                        <p>{{user["user_first_name"]}}</p>
+                                                        <p>{{user["user_tag"]}}</p>
+                                                    </div>
+                                                </a>
+                                            % end
+                                        % end
+                                    % end
+                                </div>
+                                </div>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M12.538 6.478c-.14-.146-.335-.228-.538-.228s-.396.082-.538.228l-9.252 9.53c-.21.217-.27.538-.152.815.117.277.39.458.69.458h18.5c.302 0 .573-.18.69-.457.118-.277.058-.598-.152-.814l-9.248-9.532z"></path></g></svg>
                         </div>
 
                         

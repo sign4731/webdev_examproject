@@ -1,17 +1,13 @@
 <section class="sidebar">
     <div class="sidebar__search">
         <form autocomplete="off">
-            <input id="search" name="search_query" type="text" placeholder="Search Twitter" onkeyup="onSearch()" onclick="toggleModal('search')">
+            <input id="search" name="search_query" type="text" placeholder="Search Twitter" onkeyup="onSearch()" onfocus="toggleModal('search')" >
             <label for="search" class="search"><i class="fa-solid fa-magnifying-glass"></i></label>
         </form>
-    </div>
-
-    <section class="tweet_modal search_modal">
-        <div class="tweet_modal__modal background" onclick="toggleModal('close')"></div>
-        <div class="search_box">
+        <div class="search_box box">
             <p>Try searching for people</p>
         </div>
-    </section>
+    </div>
 
     <div class="sidebar__users">
         <h2>Who to follow</h2>

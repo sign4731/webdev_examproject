@@ -19,9 +19,37 @@ function toggleModal(modal){
         document.querySelector(".header_menu_modal").classList.add("show");
 
     } else if(modal == "search"){
-        document.querySelector(".search_modal").classList.add("show");
+        document.querySelector(".search_box").classList.add("show");
+        document.addEventListener('mousedown', function(e) {
+            const container = document.querySelector('.search_box');
+            if (!container.contains(e.target)) {
+                container.classList.remove("show")
+            }
+        });
 
-    } else if(modal == "close"){
+    } else if(modal == "followers"){
+        document.querySelector(".followers_box").classList.add("show");
+        document.querySelector(".followers_box+svg").classList.add("show");
+        document.addEventListener('mousedown', function(e) {
+            const container = document.querySelector('.followers_box');
+            if (!container.contains(e.target)) {
+                container.classList.remove("show");
+                document.querySelector(".followers_box+svg").classList.remove("show");
+            }
+        });
+
+    } else if(modal == "following"){
+        document.querySelector(".following_box").classList.add("show");
+        document.querySelector(".following_box+svg").classList.add("show");
+        document.addEventListener('mousedown', function(e) {
+            const container = document.querySelector('.following_box');
+            if (!container.contains(e.target)) {
+                container.classList.remove("show");
+                document.querySelector(".following_box+svg").classList.remove("show");
+            }
+        });
+
+    }else if(modal == "close"){
         console.log(event.target)
         event.target.parentElement.classList.remove("show_flex");
         event.target.parentElement.classList.remove("show");

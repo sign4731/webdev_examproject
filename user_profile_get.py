@@ -54,17 +54,23 @@ def _(user_id):
         users = db.execute("SELECT * FROM users").fetchall()
         print(users)
 
-        # Get how many followers the user have
+        # Get how many followers the user have and who they are
         followers_amount = db.execute("SELECT COUNT(*) FROM follows WHERE user_who_got_followed_id_fk = ?", (user['user_id'],)).fetchone()
         print("AMOUNT OF FOLLOWERS")
         print(followers_amount['COUNT(*)'])
         followers_amount = followers_amount['COUNT(*)']
 
-        # Get how many the user is following
+        followers = db.execute("SELECT user_who_followed_id_fk FROM follows WHERE user_who_got_followed_id_fk = ?", (user['user_id'],)).fetchall()
+        print(followers)
+
+        # Get how many the user is following and who they are
         following_amount = db.execute("SELECT COUNT(*) FROM follows WHERE user_who_followed_id_fk = ?", (user['user_id'],)).fetchone()
         print("AMOUNT OF FOLLOWING")
         print(following_amount['COUNT(*)'])
         following_amount = following_amount['COUNT(*)']
+
+        following = db.execute("SELECT user_who_got_followed_id_fk FROM follows WHERE user_who_followed_id_fk = ?", (user['user_id'],)).fetchall()
+        print(following)
 
         # See how much all tweets are liked
         all_likes = db.execute("SELECT * FROM tweets_liked_by").fetchall()
@@ -87,7 +93,9 @@ def _(user_id):
             users = users, 
             all_likes = all_likes, 
             followers_amount = followers_amount, 
+            followers = followers,
             following_amount = following_amount, 
+            following = following,
             user_likes = user_likes, 
             follows = follows, 
             tweets_amount = tweets_amount)
