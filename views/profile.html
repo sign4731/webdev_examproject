@@ -51,7 +51,7 @@
                             <div class="followers_box box">
                                 <div class="followers_box__top"> <p> Followers</p></div>
                                 % if followers == []:
-                                    <p>This user is not following anyone yet</p>
+                                    <p>This user is not followed by anyone yet</p>
                                 % end
                                 <div class="followers_box__bottom">
                                     % for followed_user in followers:
@@ -74,7 +74,7 @@
                             <div class="following_box box">
                                 <div class="following_box__top"> <p> Following</p></div>
                                 % if following == []:
-                                    <p>This user is not followed by anyone yet</p>
+                                    <p>This user is not following anyone yet</p>
                                 % end
                                 <div class="following_box__bottom">
                                     % for following_user in following:
