@@ -104,8 +104,9 @@
                 <div class="main__tweets">
                     % tweet_counter = 0
                     % for tweet in tweets:
+
                         <!-- Make sure only tweets beloning to visited user is shown -->
-                        % if tweet['tweet_created_by'] == user['user_id']:
+                        
                             % tweet_counter = tweet_counter + 1
                             <div class="tweet">
 
@@ -209,7 +210,7 @@
                                 </section>
 
                             </div>
-                        % end
+                        
                     % end
                 </div>
 

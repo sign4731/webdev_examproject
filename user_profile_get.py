@@ -42,7 +42,7 @@ def _(user_id):
         print(user)
 
         # Get and show all tweets belonging to user
-        tweets = db.execute("SELECT * FROM tweets JOIN users WHERE tweets.tweet_created_by = users.user_id ORDER BY tweet_iat DESC").fetchall()
+        tweets = db.execute("SELECT * FROM tweets JOIN users WHERE tweets.tweet_created_by = ? AND tweets.tweet_created_by = users.user_id ORDER BY tweet_iat DESC", (user_id,)).fetchall()
         tweets_amount = db.execute("SELECT COUNT(*) FROM tweets WHERE tweet_created_by = ?", (user_id,)).fetchone()
         print("TWEETS")
         print(tweets)
@@ -89,7 +89,8 @@ def _(user_id):
 
         return dict(
             logged_in_user=logged_in_user, 
-            user = user, tweets = tweets, 
+            user = user,
+            tweets = tweets, 
             users = users, 
             all_likes = all_likes, 
             followers_amount = followers_amount, 
